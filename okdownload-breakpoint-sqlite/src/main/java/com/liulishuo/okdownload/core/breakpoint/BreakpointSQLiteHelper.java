@@ -57,10 +57,15 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
     static final String TASK_FILE_DIRTY_TABLE_NAME = "taskFileDirty";
 
     public BreakpointSQLiteHelper(Context context) {
-        super(context, NAME, null, VERSION);
+        this(context, NAME);
     }
 
-    @Override public void onOpen(SQLiteDatabase db) {
+    public BreakpointSQLiteHelper(Context context, String name) {
+        super(context, name, null, VERSION);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -70,7 +75,8 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    @Override public void onCreate(SQLiteDatabase db) {
+    @Override
+    public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + BREAKPOINT_TABLE_NAME + "( "
                 + ID + " INTEGER PRIMARY KEY, "
@@ -103,7 +109,8 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
                 + ID + " INTEGER PRIMARY KEY)");
     }
 
-    @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion == 1 && newVersion == 2) {
             db.execSQL("CREATE TABLE IF NOT EXISTS "
                     + RESPONSE_FILENAME_TABLE_NAME + "( "
@@ -119,7 +126,8 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    @Override public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
     public void markFileDirty(int id) {
@@ -130,8 +138,13 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
     }
 
     public void markFileClear(int id) {
-        getWritableDatabase().delete(TASK_FILE_DIRTY_TABLE_NAME, ID + " = ?",
-                new String[]{String.valueOf(id)});
+        try {
+            //catch disk io error disk I/O error - SQLITE_IOERR_COMMIT_ATOMIC (Sqlite code 7690)
+            getWritableDatabase().delete(TASK_FILE_DIRTY_TABLE_NAME, ID + " = ?",
+                    new String[]{String.valueOf(id)});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Integer> loadDirtyFileList() {
@@ -271,13 +284,12 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
                     "SELECT " + ID + " FROM " + BREAKPOINT_TABLE_NAME + " WHERE " + ID + " ="
                             + info.id + " LIMIT 1",
                     null);
-            if (!cursor.moveToNext()) return; // not exist
-
-            // update
-            removeInfo(info.id);
-            insert(info);
-
-            db.setTransactionSuccessful();
+            if (cursor.moveToNext()) {
+                this.removeInfo(info.id);
+                this.insert(info);
+                db.setTransactionSuccessful();
+                return;
+            }
         } finally {
             if (cursor != null) cursor.close();
             db.endTransaction();

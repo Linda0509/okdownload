@@ -37,6 +37,13 @@ public class BreakpointStoreOnSQLite implements DownloadStore {
         this.onCache = onCache;
     }
 
+    public BreakpointStoreOnSQLite(Context context, String name){
+        this.helper = new BreakpointSQLiteHelper( context.getApplicationContext(), name);
+        this.onCache = new BreakpointStoreOnCache(helper.loadToCache(),
+                helper.loadDirtyFileList(),
+                helper.loadResponseFilenameToMap());
+    }
+
     public BreakpointStoreOnSQLite(Context context) {
         this.helper = new BreakpointSQLiteHelper(context.getApplicationContext());
         this.onCache = new BreakpointStoreOnCache(helper.loadToCache(),
