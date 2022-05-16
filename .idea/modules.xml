@@ -2,24 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidStudioProjects-okdownload-root.iml" filepath="$PROJECT_DIR$/AndroidStudioProjects-okdownload-root.iml" />
-      <module fileurl="file://$PROJECT_DIR$/benchmark/benchmark.iml" filepath="$PROJECT_DIR$/benchmark/benchmark.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-filedownloader/filedownloader.iml" filepath="$PROJECT_DIR$/okdownload-filedownloader/filedownloader.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-kotlin-enhance/kotlin.iml" filepath="$PROJECT_DIR$/okdownload-kotlin-enhance/kotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload/okdownload.iml" filepath="$PROJECT_DIR$/okdownload/okdownload.iml" />
-      <module fileurl="file://$PROJECT_DIR$/benchmark/okdownload-benchmark.iml" filepath="$PROJECT_DIR$/benchmark/okdownload-benchmark.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-breakpoint-sqlite/okdownload-breakpoint-sqlite-sqlite.iml" filepath="$PROJECT_DIR$/okdownload-breakpoint-sqlite/okdownload-breakpoint-sqlite-sqlite.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-connection-okhttp/okdownload-connection-okhttp-okhttp.iml" filepath="$PROJECT_DIR$/okdownload-connection-okhttp/okdownload-connection-okhttp-okhttp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-filedownloader/okdownload-filedownloader-filedownloader.iml" filepath="$PROJECT_DIR$/okdownload-filedownloader/okdownload-filedownloader-filedownloader.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-kotlin-enhance/okdownload-kotlin-enhance-kotlin.iml" filepath="$PROJECT_DIR$/okdownload-kotlin-enhance/okdownload-kotlin-enhance-kotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload/okdownload-okdownload.iml" filepath="$PROJECT_DIR$/okdownload/okdownload-okdownload.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-process/okdownload-process-process.iml" filepath="$PROJECT_DIR$/okdownload-process/okdownload-process-process.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-root.iml" filepath="$PROJECT_DIR$/okdownload-root.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sample/okdownload-sample.iml" filepath="$PROJECT_DIR$/sample/okdownload-sample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-connection-okhttp/okhttp.iml" filepath="$PROJECT_DIR$/okdownload-connection-okhttp/okhttp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-process/process.iml" filepath="$PROJECT_DIR$/okdownload-process/process.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okdownload-breakpoint-sqlite/sqlite.iml" filepath="$PROJECT_DIR$/okdownload-breakpoint-sqlite/sqlite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-root.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/benchmark/okdownload-root.benchmark.iml" filepath="$PROJECT_DIR$/.idea/modules/benchmark/okdownload-root.benchmark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/okdownload-root.filedownloader.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/okdownload-root.filedownloader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/okdownload-root.kotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/okdownload-root.kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload/okdownload-root.okdownload.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload/okdownload-root.okdownload.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-connection-okhttp/okdownload-root.okhttp.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-connection-okhttp/okdownload-root.okhttp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-process/okdownload-root.process.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-process/okdownload-root.process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/okdownload-root.sample.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/okdownload-root.sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/okdownload-root.sqlite.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/okdownload-root.sqlite.iml" />
     </modules>
   </component>
 </project>
