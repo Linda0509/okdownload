@@ -193,7 +193,10 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
             while (blockIt.hasNext()) {
                 final BlockInfoRow blockInfoRow = blockIt.next();
                 if (blockInfoRow.getBreakpointId() == info.id) {
-                    info.addBlock(blockInfoRow.toInfo());
+                    BlockInfo blockInfo = blockInfoRow.toInfo();
+                    if (blockInfo != null) {
+                        info.addBlock(blockInfo);
+                    }
                     blockIt.remove();
                 }
             }

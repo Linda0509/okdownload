@@ -54,6 +54,10 @@ public class BlockInfoRow {
     }
 
     public BlockInfo toInfo() {
-        return new BlockInfo(startOffset, contentLength, currentOffset);
+        try {
+            return new BlockInfo(startOffset, contentLength, currentOffset);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
