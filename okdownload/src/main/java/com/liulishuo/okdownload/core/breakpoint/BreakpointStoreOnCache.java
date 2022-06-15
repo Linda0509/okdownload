@@ -26,9 +26,9 @@ import com.liulishuo.okdownload.core.cause.EndCause;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BreakpointStoreOnCache implements DownloadStore {
     private final SparseArray<BreakpointInfo> storedInfos;
@@ -37,8 +37,9 @@ public class BreakpointStoreOnCache implements DownloadStore {
     @NonNull private final KeyToIdMap keyToIdMap;
 
     private final SparseArray<IdentifiedTask> unStoredTasks;
-    private final List<Integer> sortedOccupiedIds;
+    private final List<Integer> occupiedIds;
     private final List<Integer> fileDirtyList;
+    private final AtomicInteger idCreator = new AtomicInteger();
 
     public BreakpointStoreOnCache() {
         this(new SparseArray<BreakpointInfo>(), new ArrayList<Integer>(),
@@ -49,13 +50,13 @@ public class BreakpointStoreOnCache implements DownloadStore {
                            List<Integer> fileDirtyList,
                            HashMap<String, String> responseFilenameMap,
                            SparseArray<IdentifiedTask> unStoredTasks,
-                           List<Integer> sortedOccupiedIds,
+                           List<Integer> occupiedIds,
                            KeyToIdMap keyToIdMap) {
         this.unStoredTasks = unStoredTasks;
         this.fileDirtyList = fileDirtyList;
         this.storedInfos = storedInfos;
         this.responseFilenameMap = responseFilenameMap;
-        this.sortedOccupiedIds = sortedOccupiedIds;
+        this.occupiedIds = occupiedIds;
         this.keyToIdMap = keyToIdMap;
     }
 
@@ -70,11 +71,10 @@ public class BreakpointStoreOnCache implements DownloadStore {
 
         final int count = storedInfos.size();
 
-        sortedOccupiedIds = new ArrayList<>(count);
+        occupiedIds = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
-            sortedOccupiedIds.add(storedInfos.valueAt(i).id);
+            occupiedIds.add(storedInfos.valueAt(i).id);
         }
-        Collections.sort(sortedOccupiedIds);
     }
 
     @Override
@@ -159,7 +159,7 @@ public class BreakpointStoreOnCache implements DownloadStore {
 
     @Override public synchronized void remove(int id) {
         storedInfos.remove(id);
-        if (unStoredTasks.get(id) == null) sortedOccupiedIds.remove(Integer.valueOf(id));
+        if (unStoredTasks.get(id) == null) occupiedIds.remove(Integer.valueOf(id));
         keyToIdMap.remove(id);
     }
 
@@ -225,52 +225,11 @@ public class BreakpointStoreOnCache implements DownloadStore {
     public static final int FIRST_ID = 1;
 
     synchronized int allocateId() {
-        int newId = 0;
-
-        int index = 0;
-
-        int preId = 0;
-        int curId;
-
-        for (int i = 0; i < sortedOccupiedIds.size(); i++) {
-            final Integer curIdObj = sortedOccupiedIds.get(i);
-            if (curIdObj == null) {
-                index = i;
-                newId = preId + 1;
-                break;
-            }
-
-            curId = curIdObj;
-            if (preId == 0) {
-                if (curId != FIRST_ID) {
-                    newId = FIRST_ID;
-                    index = 0;
-                    break;
-                }
-                preId = curId;
-                continue;
-            }
-
-            if (curId != preId + 1) {
-                newId = preId + 1;
-                index = i;
-                break;
-            }
-
-            preId = curId;
+        int id = idCreator.incrementAndGet();
+        while (occupiedIds.contains(id)) {
+            id = idCreator.incrementAndGet();
         }
-
-        if (newId == 0) {
-            if (sortedOccupiedIds.isEmpty()) {
-                newId = FIRST_ID;
-            } else {
-                newId = sortedOccupiedIds.get(sortedOccupiedIds.size() - 1) + 1;
-                index = sortedOccupiedIds.size();
-            }
-        }
-
-        sortedOccupiedIds.add(index, newId);
-
-        return newId;
+        occupiedIds.add(id);
+        return id;
     }
 }
