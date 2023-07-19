@@ -142,7 +142,7 @@ public class RemitSyncExecutor implements Handler.Callback {
                     this.agent.syncCacheToDB(idList);
                     freeToDBIdList.addAll(idList);
                     Util.d(TAG, "sync bunch info with ids: " + idList);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     Util.w(TAG, "sync info to db failed for ids: " + idList);
                 }
                 break;
@@ -153,7 +153,7 @@ public class RemitSyncExecutor implements Handler.Callback {
                     this.agent.syncCacheToDB(id);
                     freeToDBIdList.add(id);
                     Util.d(TAG, "sync info with id: " + id);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     Util.w(TAG, "sync cache to db failed for id: " + id);
                 }
                 break;
